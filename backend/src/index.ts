@@ -1,6 +1,21 @@
-import express, {Request, Response} from "express";
+import express from "express";
 import cors from "cors";
 import "dotenv/config";
+import mongoose from "mongoose";
+
+async function connectToDatabase() {
+    try {
+      await mongoose.connect(process.env.MONGO_URL as string, {
+      });
+      console.log('Connected to MongoDB');
+    } catch (error) {
+      console.error('Error connecting to MongoDB:', error);
+      // You can choose to handle the error differently based on your application's requirements
+      process.exit(1); // Exit the process with a non-zero exit code to indicate failure
+    }
+  }
+  
+connectToDatabase();
 
 const app = express();
 app.use(express.json());
